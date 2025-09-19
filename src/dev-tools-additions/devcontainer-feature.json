@@ -6,5 +6,5 @@
     "documentationURL": "https://github.com/nikunh/dev-tools-additions-vishkrm",
     "licenseURL": "https://github.com/nikunh/dev-tools-additions-vishkrm/blob/main/LICENSE",
     "options": {},
-    "installsAfter": []
+    "installsAfter": ["ghcr.io/nikunh/001-dev-packages-vishkrm/001-dev-packages"]
 }
