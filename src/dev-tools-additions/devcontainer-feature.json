@@ -1,0 +1,14 @@
+{
+  "id": "dev-tools-additions",
+  "version": "0.0.1",
+  "name": "Dev Tools (Additions)",
+  "description": "Installs additional development tools like gum and cifs-utils.",
+  "documentationURL": "https://github.com/nikunh/dev-tools-additions-vishkrm",
+  "licenseURL": "https://github.com/nikunh/dev-tools-additions-vishkrm/blob/main/LICENSE",
+  "options": {},
+  "installsAfter": [
+    "ghcr.io/nikunh/001-dev-packages-vishkrm/001-dev-packages",
+    "ghcr.io/nikunh/002-user-setup-vishkrm/002-user-setup",
+    "ghcr.io/nikunh/003-zsh-setup-vishkrm/003-zsh-setup"
+  ]
+}
