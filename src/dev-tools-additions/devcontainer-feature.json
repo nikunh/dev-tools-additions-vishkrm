@@ -1,6 +1,6 @@
 {
   "id": "dev-tools-additions",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "name": "Dev Tools (Additions)",
   "description": "Installs additional development tools like gum and cifs-utils.",
   "documentationURL": "https://github.com/nikunh/dev-tools-additions-vishkrm",
