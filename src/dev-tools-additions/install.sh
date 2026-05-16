@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/bin/bash
 set -e
 
 # Logging mechanism for debugging
@@ -16,9 +16,11 @@ log_debug "Environment: USER=$USER HOME=$HOME"
 # Set DEBIAN_FRONTEND to noninteractive to prevent prompts
 export DEBIAN_FRONTEND=noninteractive
 
-# Get username from environment or default to babaji
-USERNAME=${USERNAME:-"babaji"}
-USER_HOME="/home/${USERNAME}"
+# Audit fix 2026-05-15: resolve runtime user/home/group dynamically (no hardcoded babaji)
+USERNAME="${USERNAME:-${_REMOTE_USER:-vishkrm}}"
+USER_HOME="$(getent passwd "$USERNAME" 2>/dev/null | cut -d: -f6)"
+[ -z "$USER_HOME" ] && USER_HOME="/home/${USERNAME}"
+USER_GROUP="$(id -gn "$USERNAME" 2>/dev/null || echo users)"
 
 # Function to get system architecture
 get_architecture() {
@@ -106,14 +108,14 @@ fi'
     if [ -d "$USER_HOME/.ohmyzsh_source_load_scripts" ]; then
         echo "$fragment_content" > "$fragment_file_user"
         if [ "$USER" != "$USERNAME" ]; then
-            chown ${USERNAME}:${USERNAME} "$fragment_file_user" 2>/dev/null || chown ${USERNAME}:users "$fragment_file_user" 2>/dev/null || true
+            chown "${USERNAME}:${USER_GROUP}" "$fragment_file_user" 2>/dev/null || true
         fi
     elif [ -d "$USER_HOME" ]; then
         # Create the directory if it doesn't exist
         mkdir -p "$USER_HOME/.ohmyzsh_source_load_scripts"
         echo "$fragment_content" > "$fragment_file_user"
         if [ "$USER" != "$USERNAME" ]; then
-            chown -R ${USERNAME}:${USERNAME} "$USER_HOME/.ohmyzsh_source_load_scripts" 2>/dev/null || chown -R ${USERNAME}:users "$USER_HOME/.ohmyzsh_source_load_scripts" 2>/dev/null || true
+            chown -R "${USERNAME}:${USER_GROUP}" "$USER_HOME/.ohmyzsh_source_load_scripts" 2>/dev/null || true
         fi
     fi
     
